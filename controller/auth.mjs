@@ -54,3 +54,11 @@ export async function login(req, res, next) {
   const token = await createJWT(user.id);
   res.status(200).json({ token, user });
 }
+
+export async function me(req, res, next) {
+  // const user = await Array.findByUserid(req.id);
+  // if (!user) {
+  //   return res.status(404).json({ message: "일치하는 사용자가 없습니다." });
+  // }
+  // res.status(200).json({ token: req.token, userid: user.userid });
+}

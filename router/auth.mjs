@@ -3,6 +3,7 @@ import * as AC from "../controller/auth.mjs";
 import { body } from "express-validator";
 import { validate } from "../middleware/validator.mjs";
 import { users } from "../data/auth.mjs";
+import { isAuth } from "../middleware/auth.mjs";
 
 const router = express.Router();
 const validationLogin = [
@@ -30,5 +31,6 @@ router.post("/signup", validationSign, AC.signup);
 router.post("/login", validationLogin, AC.login);
 
 // 로그인 유지
+router.post("/me", isAuth, AC.me);
 
 export default router;
