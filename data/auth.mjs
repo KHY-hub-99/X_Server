@@ -1,4 +1,4 @@
-let users = [
+export let users = [
   {
     id: "1",
     userid: "apple",
@@ -55,19 +55,24 @@ export async function addUser(userid, password, name, email) {
   return user;
 }
 
-// 로그인 하기
-export async function loginUser(userid, password) {
-  const user = users.find(
-    (user) => user.userid === userid && user.password === password
-  );
-  if (user) {
-    return true;
-  }
-}
-
+// 로그인 하기 //
 // export async function loginUser(userid, password) {
 //   const user = users.find(
 //     (user) => user.userid === userid && user.password === password
 //   );
-//   return user;
+//   if (user) {
+//     return true;
+//   }
 // }
+
+export async function loginUser(userid, password) {
+  const user = users.find(
+    (user) => user.userid === userid && user.password === password
+  );
+  return user;
+}
+
+export async function findByUserid(userid) {
+  const user = users.find((user) => user.userid === userid);
+  return user;
+}
