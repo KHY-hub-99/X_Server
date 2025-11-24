@@ -1,9 +1,10 @@
 import express from "express";
 import postsRouter from "./router/posts.mjs";
 import authRouter from "./router/auth.mjs";
+import { config } from "./config.mjs";
 
 const app = express();
-const port = 8080;
+const port = config.host.port;
 app.use(express.json());
 
 app.use("/post", postsRouter);

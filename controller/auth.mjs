@@ -2,10 +2,11 @@ import express from "express";
 import * as AR from "../data/auth.mjs";
 import * as bcr from "bcrypt";
 import jwt from "jsonwebtoken";
+import { config } from "../config.mjs";
 
-const secretkey = "asadfe!@#$";
-const bcrSalt = 10;
-const jwtExpire = "2d";
+const secretkey = config.jwt.secertKey;
+const bcrSalt = config.bycrypt.saltRounds;
+const jwtExpire = config.jwt.expiresInSec;
 
 async function createJWT(id) {
   return jwt.sign({ id }, secretkey, { expiresIn: jwtExpire });
