@@ -2,6 +2,7 @@ import express from "express";
 import * as PC from "../controller/post.mjs";
 import { body } from "express-validator";
 import { validate } from "../middleware/validator.mjs";
+import { isAuth } from "../middleware/auth.mjs";
 
 const router = express.Router();
 const validator = [
@@ -13,22 +14,22 @@ const validator = [
 // 특정 아이디에 대한 포스트 가져오기
 // http://127.0.0.1:8080/post
 // http://127.0.0.1:8080/post?userid={YOUR_ID}
-router.get("/", PC.getPosts);
+router.get("/", isAuth, PC.getPosts);
 
 // 글번호에 대한 포스트 가져오기
 // http://127.0.0.1:8080/post/:id
-router.get("/:id", PC.getPost);
+router.get("/:id", isAuth, PC.getPost);
 
 // 포스트 쓰기
 // http://127.0.0.1:8080/post/
-router.post("/", validator, PC.createPost);
+router.post("/", isAuth, validator, PC.createPost);
 
 // 포스트 수정하기
 // http://127.0.0.1:8080/post/:id
-router.put("/:id", PC.updatePost);
+router.put("/:id", isAuth, PC.updatePost);
 
 // 포스트 삭제하기
 // http://127.0.0.1:8080/post/:id
-router.delete("/:id", PC.deletePost);
+router.delete("/:id", isAuth, PC.deletePost);
 
 export default router;
