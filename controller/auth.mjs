@@ -14,33 +14,20 @@ async function createJWT(id) {
 
 // 회원가입
 export async function signup(req, res, next) {
-  const { userid, password, name, email } = req.body;
+  const { userid, password, name, email, url } = req.body;
   // 회원 중복 체크
   const found = await AR.findByUserid(userid);
   if (found) {
     return res.status(409).json({ message: `${userid}이 이미 있습니다.` });
   }
   const hashed = bcr.hashSync(password, bcrSalt);
-  const user = await AR.addUser(userid, hashed, name, email);
+  const user = await AR.addUser({ userid, password: hashed, name, email, url });
   const token = await createJWT(user.id);
   console.log(token);
   res.status(210).json({ token, user });
 }
 
 // 로그인 확인 //
-// export async function login(req, res, next) {
-//   const { userid, password } = req.body;
-//   const loginSuccess = await AR.loginUser(userid, password);
-//   console.log(loginSuccess);
-//   if (loginSuccess === true) {
-//     return res.status(200).json({ message: "로그인 되었습니다." });
-//   } else {
-//     return res
-//       .status(404)
-//       .json({ message: "아이디 또는 비밀번호가 일치하지 않습니다." });
-//   }
-// }
-
 export async function login(req, res, next) {
   const { userid, password } = req.body;
   const user = await AR.findByUserid(userid);
@@ -56,10 +43,11 @@ export async function login(req, res, next) {
   res.status(200).json({ token, user });
 }
 
+// 로그인 유지하기
 export async function me(req, res, next) {
-  // const user = await Array.findByUserid(req.id);
-  // if (!user) {
-  //   return res.status(404).json({ message: "일치하는 사용자가 없습니다." });
-  // }
-  // res.status(200).json({ token: req.token, userid: user.userid });
+  const user = await AR.findById(req.id);
+  if (!user) {
+    return res.status(404).json({ message: "일치하는 사용자가 없습니다." });
+  }
+  res.status(200).json({ token: req.token, userid: user.userid });
 }

@@ -13,10 +13,11 @@ function required(key, defaultValue = undefined) {
 export const config = {
   jwt: {
     secertKey: required("JWT_SECRET"),
-    expiresInSec: parseInt(required("JWT_EXPIRE_SEC")),
+    expiresInSec: parseInt(required("JWT_EXPIRES_SEC")),
   },
   bycrypt: {
     saltRounds: parseInt(required("BCRYPT_SALT_ROUNDS", 12)),
   },
   host: { port: parseInt(required("HOST_PORT", 9090)) },
+  db: { host: required("DB_HOST") },
 };

@@ -1,19 +1,21 @@
 import express from "express";
-import postsRouter from "./router/posts.mjs";
+import postRouter from "./router/posts.mjs";
 import authRouter from "./router/auth.mjs";
 import { config } from "./config.mjs";
+import { connectDB } from "./db/database.mjs";
 
 const app = express();
-const port = config.host.port;
 app.use(express.json());
-
-app.use("/post", postsRouter);
+app.use("/post", postRouter);
 app.use("/auth", authRouter);
-
 app.use((req, res, next) => {
   res.sendStatus(404);
 });
 
-app.listen(port, () => {
-  console.log(`${port} Port Serving...`);
-});
+connectDB()
+  .then(() => {
+    app.listen(config.host.port, () => {
+      console.log(`${config.host.port} Port Serving...`);
+    });
+  })
+  .catch(console.error);
