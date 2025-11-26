@@ -1,0 +1,14 @@
+Mongoose
+    - Node.js에서 MongoDB를 쉽게 다루기 위한 ODM 라이브러리
+    - MongoDB는 스키마가 자유로운 NoSQL이기 떄문에 데이터의 구조가 들쭉날쭉해지기 쉬움
+    - 스키마 개념을 추가해서 문서를 정의하도록 도와줌(MongoDB + 타입/유효성 검사/모델 개념 = Mongoose)
+
+Mongoose 사용 흐름
+    1. Schema 정의
+    2. Model 생성(컬렉션에 대응)
+    3. Model을 사용해서 CRUD 수행
+
+ODM(Object Data Modeling)
+    NoSQL 데이터베이스를 객체 기반으로 다룰 수 있게 도와주는 라이브러리 또는 기술
+
+    ✔ SQL은 ORM(Object Relational Mapping)을 사용

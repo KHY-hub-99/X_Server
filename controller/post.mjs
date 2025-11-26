@@ -30,10 +30,12 @@ export async function updatePost(req, res, next) {
   const id = req.params.id;
   const text = req.body.text;
   const post = await PR.getById(id);
+  console.log("포스트 아이디엑스", post.userIdx);
+  console.log("리퀘스트 아이디", req.id);
   if (!post) {
     return res.status(404).json({ message: `${id}에 대한 포스트가 없습니다.` });
   }
-  if (post.idx !== req.id) {
+  if (post.userIdx !== req.id) {
     return res.sendStatus(403);
   }
   const updated = await PR.update(id, text);
@@ -47,7 +49,7 @@ export async function deletePost(req, res, next) {
   if (!post) {
     return res.status(404).json({ message: `${id}에 대한 포스트가 없습니다.` });
   }
-  if (post.idx !== req.id) {
+  if (post.userIdx !== req.id) {
     return res.sendStatus(403);
   }
   await PR.removeId(id);
